@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Add Task</title>
+    <script>
+        function addTask() {
+            let title = document.getElementById("title").value;
+            let description = document.getElementById("description").value;
+
+            fetch("tasks.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ title, description })
+            })
+                .then(response => response.json())
+
+                /* Assignment 24/3/25 Redirect back to dashboard
+    
+                // .then(data => alert(data.message)); 
+    
+                Old code: It only shows an alert when a task is added, updated, or deleted.
+                The user has to manually go back to the dashboard.
+    
+                */
+
+                //New Code  It shows the alert AND automatically sends the user back to "dashboard.html".
+
+                .then(data => {
+                    alert(data.message);
+                    window.location.href = "dashboard.html"; // Go back!! 
+                });
+
+        }
+    </script>
+</head>
+
+<body>
+    <h2>Add Task</h2>
+
+    <p>Fill in the details of the task you want to add:</p>
+
+    <input type="text" id="title" placeholder="Title"><br>
+    <input type="text" id="description" placeholder="Task Description"><br>
+    <button onclick="addTask()">Add Task</button>
+</body>
+
+</html>
